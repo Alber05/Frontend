@@ -1,12 +1,7 @@
-// Librerías de React
 import { useEffect, useState } from 'react'
-import { useParams, Link } from 'react-router-dom'
-
-// Componentes y recursos
-import ErrorComponent from '../components/errorComponent'
+import { Link, useParams } from 'react-router-dom'
+import ErrorComponent from '../components/ErrorComponent'
 import confirm from '../assets/confirm.png'
-
-// Configuración y utilidades específicas del proyecto
 import axiosClient from '../config/axiosClient'
 
 function ConfirmAccount() {
@@ -39,17 +34,14 @@ function ConfirmAccount() {
   }, [token]) // Make sure to include token as a dependency if it's used inside the useEffect.
 
   return (
-    <div className='w-full h-screen py-6 flex flex-col items-center justify-center gap-36'>
+    <div className='flex h-screen w-full flex-col items-center justify-center gap-36 py-6'>
       {alert?.error ? (
         <ErrorComponent error={alert} />
       ) : (
         // TODO: Cambiar pantalla del token
         <>
-          <h1 className='text-3xl text-custom-cyan font-black'>{alert?.msg}</h1>
-          <img
-            src={confirm}
-            alt='Success'
-          />
+          <h1 className='text-3xl font-black text-custom-cyan'>{alert?.msg}</h1>
+          <img src={confirm} alt='Success' />
           <p className='mt-5 text-center text-sm text-gray-500'>
             ¿Tienes una cuenta?{' '}
             <Link

@@ -1,12 +1,13 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
+import { AuthProvider } from './context/AuthProvider'
+import { ProjectsProvider } from './context/ProjectsProvider'
 import AuthLayout from './layouts/AuthLayout'
+import ProtectedRoutes from './layouts/ProtectedRoutes'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import ForgotPassword from './pages/ForgotPassword'
 import NewPassword from './pages/NewPassword'
 import ConfirmAccount from './pages/ConfirmAccount'
-import { AuthProvider } from './context/AuthProvider'
-import ProtectedRoutes from './layouts/ProtectedRoutes'
 import Projects from './pages/Projects'
 import NewProject from './pages/NewProject'
 
@@ -45,7 +46,9 @@ const router = createBrowserRouter([
     path: '/projects',
     element: (
       <AuthProvider>
-        <ProtectedRoutes />
+        <ProjectsProvider>
+          <ProtectedRoutes />
+        </ProjectsProvider>
       </AuthProvider>
     ),
     children: [

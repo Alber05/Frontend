@@ -4,8 +4,8 @@ const Alert = ({ alert }) => {
   return (
     <small
       className={`${
-        alert.error ? 'text-red-400 whitespace-pre' : 'text-custom-cyan'
-      } text-center block`}
+        alert.error ? 'whitespace-pre text-red-400' : 'text-custom-cyan'
+      } block text-center`}
     >
       {alert.msg}
     </small>

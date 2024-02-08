@@ -2,13 +2,13 @@
 export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
-    fontFamily: {
-      Montserrat: ['Montserrat', 'sans-serif'],
-      Eczar: ['Eczar', 'serif']
-    },
     extend: {
+      fontFamily: {
+        Montserrat: ['Montserrat', 'sans-serif'],
+        Russo: ['Russo One', 'serif']
+      },
       colors: {
-        'primary-blue': '#111827',
+        'primary-blue': '#0F1623',
         'custom-cyan': '#62CFC8'
       },
       backgroundImage: {

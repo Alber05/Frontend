@@ -1,9 +1,9 @@
 import { useState, useEffect, createContext } from 'react'
+import PropTypes from 'prop-types'
 import { useNavigate } from 'react-router-dom'
 import axiosClient from '../config/axiosClient'
-import PropTypes from 'prop-types'
 
-const AuthContext = createContext()
+const AuthContext = createContext({})
 
 const AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState({})
@@ -16,6 +16,7 @@ const AuthProvider = ({ children }) => {
       const token = localStorage.getItem('token')
       if (!token) {
         setLoading(false)
+        navigate('/')
         return
       }
 

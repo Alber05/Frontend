@@ -1,18 +1,9 @@
-// Librerías de React
 import { useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
-
-// Configuración y utilidades
-import axiosClient from '../config/axiosClient'
-
-// Recursos
-import Logo from '../assets/OIG.png'
-
-// Librerías de terceros
 import { useInView } from 'framer-motion'
-
-// Componentes
 import Alert from '../components/Alert'
+import Logo from '../assets/OIG.png'
+import axiosClient from '../config/axiosClient'
 
 function ForgotPassword() {
   const [email, setEmail] = useState('')
@@ -45,21 +36,21 @@ function ForgotPassword() {
 
   return (
     <div
-      className='w-full min-h-screen py-6 lg:py-0 grid lg:grid-cols-2 bg-login-form bg-fixed bg-cover overflow-hidden'
+      className='grid min-h-screen w-full overflow-hidden bg-login-form bg-cover bg-fixed py-6 lg:grid-cols-2 lg:py-0'
       ref={pageRef}
     >
       <div className='flex items-center justify-center'>
-        <h1 className='text-center font-black text-gray-50 uppercase space-y-2 text-3xl lg:text-4xl xl:text-5xl '>
+        <h1 className='space-y-2 text-center text-3xl font-black uppercase text-gray-50 lg:text-4xl xl:text-5xl '>
           <span className='block'>Recupera el acceso con facilidad</span>
-          <span className='text-custom-cyan block text-5xl xl:text-7xl'>
+          <span className='block text-5xl text-custom-cyan xl:text-7xl'>
             Tu seguridad
           </span>
           <span className='block'>nuestra prioridad</span>
         </h1>
       </div>
-      <div className='flex justify-center items-center'>
+      <div className='flex items-center justify-center'>
         <div
-          className='p-6 rounded-md max-w-md shadow-2xl bg-gray-50 flex-1'
+          className='max-w-md flex-1 rounded-md bg-gray-50 p-6 shadow-2xl'
           style={{
             translate: isInView ? '0' : '100%',
             opacity: isInView ? 1 : 0,
@@ -67,25 +58,18 @@ function ForgotPassword() {
           }}
         >
           <Link to='/'>
-            <img
-              className='mx-auto h-40 w-auto'
-              src={Logo}
-              alt='UptaskLogo'
-            />
+            <img className='mx-auto h-40 w-auto' src={Logo} alt='UptaskLogo' />
           </Link>
 
-          <h2 className='mt-3 text-center text-2xl  leading-9 tracking-tight text-primary-blue font-black'>
+          <h2 className='mt-3 text-center text-2xl  font-black leading-9 tracking-tight text-primary-blue'>
             Recuperar contraseña
           </h2>
 
-          <form
-            className='mt-5 space-y-6'
-            onSubmit={(e) => handleSubmit(e)}
-          >
+          <form className='mt-5 space-y-6' onSubmit={(e) => handleSubmit(e)}>
             <div>
               <label
                 htmlFor='email'
-                className='block text-sm leading-6 text-primary-blue font-bold'
+                className='block text-sm font-bold leading-6 text-primary-blue'
               >
                 Email
               </label>
@@ -105,7 +89,7 @@ function ForgotPassword() {
 
             <button
               type='submit'
-              className='flex w-full justify-center rounded-md bg-primary-blue px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-custom-cyan hover:text-primary-blue focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 transition-colors duration-200'
+              className='flex w-full justify-center rounded-md bg-primary-blue px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm transition-colors duration-200 hover:bg-custom-cyan hover:text-primary-blue focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2'
             >
               Enviar email
             </button>

@@ -1,16 +1,9 @@
-// Librerías de React
 import { useState, useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom'
-
-// Configuración y utilidades propias
 import Logo from '../assets/OIG.png'
 import passwordValidation from '../helpers/passwordValidation'
-
-// Componentes
 import Alert from '../components/Alert'
-import ErrorComponent from '../components/errorComponent'
-
-// Configuración y utilidades específicas del proyecto
+import ErrorComponent from '../components/ErrorComponent'
 import axiosClient from '../config/axiosClient'
 
 const initialForm = {
@@ -100,23 +93,23 @@ function NewPassword() {
   }
 
   return (
-    <div className='w-full min-h-screen py-6 lg:py-0 grid  bg-login-form bg-fixed bg-cover overflow-hidden '>
+    <div className='grid min-h-screen w-full overflow-hidden bg-login-form  bg-cover bg-fixed py-6 lg:py-0'>
       {validToken ? (
         <>
           <section className='flex items-center justify-center'>
-            <h1 className='text-center font-black text-gray-50 uppercase space-y-2 text-3xl lg:text-4xl xl:text-5xl '>
+            <h1 className='space-y-2 text-center text-3xl font-black uppercase text-gray-50 lg:text-4xl xl:text-5xl'>
               <span className='block'>Recupera el acceso con facilidad</span>
 
-              <span className='text-custom-cyan block text-5xl xl:text-7xl'>
+              <span className='block text-5xl text-custom-cyan xl:text-7xl'>
                 Tu seguridad
               </span>
 
               <span className='block'>nuestra prioridad</span>
             </h1>
           </section>
-          <section className='flex justify-center items-center'>
+          <section className='flex items-center justify-center'>
             {/* Card del forumlario */}
-            <div className='p-6 rounded-md max-w-md shadow-2xl bg-gray-50 flex-1'>
+            <div className='max-w-md flex-1 rounded-md bg-gray-50 p-6 shadow-2xl'>
               {/* Logo de la empresa */}
               <Link to='/'>
                 <img
@@ -126,7 +119,7 @@ function NewPassword() {
                 />
               </Link>
               {/* Título del formulario */}
-              <h2 className='mt-3 text-center text-2xl leading-9 tracking-tight text-primary-blue font-black'>
+              <h2 className='mt-3 text-center text-2xl font-black leading-9 tracking-tight text-primary-blue'>
                 Nueva contraseña
               </h2>
 
@@ -139,7 +132,7 @@ function NewPassword() {
                 <div>
                   <label
                     htmlFor='password'
-                    className='block text-sm leading-6 text-primary-blue font-bold'
+                    className='block text-sm font-bold leading-6 text-primary-blue'
                   >
                     Password
                   </label>
@@ -152,7 +145,7 @@ function NewPassword() {
                       type='password'
                       autoComplete='new-password'
                       required
-                      className='mt-2 block w-full rounded-md border-0 py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-blue sm:text-sm sm:leading-6'
+                      className='mt-2 block w-full rounded-md border-0 px-1.5 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-blue sm:text-sm sm:leading-6'
                       placeholder='Introduzca su nueva contraseña'
                       value={form.password}
                       onChange={(e) => handleChange(e)}
@@ -160,7 +153,7 @@ function NewPassword() {
                     <button
                       type='button'
                       onClick={() => togglePasswordVisibility('password')}
-                      className='absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500 cursor-pointer'
+                      className='absolute inset-y-0 right-0 flex cursor-pointer items-center pr-3 text-gray-500'
                     >
                       {/* Icono de ojo para mostrar/ocultar la contraseña */}
                       <svg
@@ -190,7 +183,7 @@ function NewPassword() {
                 <div>
                   <label
                     htmlFor='repeatedPassword'
-                    className='block text-sm leading-6 text-primary-blue font-bold'
+                    className='block text-sm font-bold leading-6 text-primary-blue'
                   >
                     Confirmar contraseña
                   </label>
@@ -203,7 +196,7 @@ function NewPassword() {
                       type='password'
                       autoComplete='new-password'
                       required
-                      className='mt-2 block w-full rounded-md border-0 py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-blue sm:text-sm sm:leading-6'
+                      className='mt-2 block w-full rounded-md border-0 px-1.5 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-blue sm:text-sm sm:leading-6'
                       placeholder='Repita la contraseña'
                       value={form.repeatedPassword}
                       onChange={(e) => handleChange(e)}
@@ -213,7 +206,7 @@ function NewPassword() {
                       onClick={() =>
                         togglePasswordVisibility('confirmPassword')
                       }
-                      className='absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500 cursor-pointer'
+                      className='absolute inset-y-0 right-0 flex cursor-pointer items-center pr-3 text-gray-500'
                     >
                       {/* Icono de ojo para mostrar/ocultar la contraseña */}
                       <svg
@@ -241,7 +234,7 @@ function NewPassword() {
                 </div>
                 <button
                   type='submit'
-                  className='flex w-full justify-center rounded-md bg-primary-blue px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-custom-cyan hover:text-primary-blue focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 transition-colors duration-200'
+                  className='flex w-full justify-center rounded-md bg-primary-blue px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm transition-colors duration-200 hover:bg-custom-cyan hover:text-primary-blue focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2'
                 >
                   Cambiar contraseña
                 </button>

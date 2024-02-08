@@ -1,18 +1,9 @@
-// Librerías de React
 import { useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import useAuth from '../hooks/useAuth'
-
-// Recursos
-import Logo from '../assets/OIG.png'
-
-// Librerías de terceros
 import { useInView } from 'framer-motion'
-
-// Componentes
+import useAuth from '../hooks/useAuth'
+import Logo from '../assets/OIG.png'
 import Alert from '../components/Alert'
-
-// Configuración y utilidades
 import axiosClient from '../config/axiosClient'
 
 const initialForm = {
@@ -25,6 +16,7 @@ export default function Login() {
   const [alert, setAlert] = useState({})
 
   const { setAuth } = useAuth()
+  const navigate = useNavigate()
   const pageRef = useRef(null)
   const isInView = useInView(pageRef, { once: true })
 
@@ -47,6 +39,7 @@ export default function Login() {
       })
       localStorage.setItem('token', data.token)
       setAuth(data)
+      navigate('/projects')
     } catch (error) {
       console.log(error.response.data.msg)
       setAlert({
@@ -67,12 +60,12 @@ export default function Login() {
   }
   return (
     <div
-      className='w-full min-h-screen grid grid-rows-[auto]  lg:grid-cols-2 bg-login-form bg-fixed bg-cover py-12 lg:py-0'
+      className='grid min-h-screen w-full grid-rows-[auto]  bg-login-form bg-cover bg-fixed py-12 lg:grid-cols-2 lg:py-0'
       ref={pageRef}
     >
-      <section className='lg:flex  items-center justify-center'>
+      <section className='items-center  justify-center lg:flex'>
         <h1
-          className='text-center font-black text-gray-50 uppercase space-y-2 text-3xl lg:text-4xl xl:text-5xl'
+          className='space-y-2 text-center text-3xl font-black uppercase text-gray-50 lg:text-4xl xl:text-5xl'
           style={{
             opacity: isInView ? 1 : 0,
             transition:
@@ -80,7 +73,7 @@ export default function Login() {
           }}
         >
           <span className='block'>Accede a la eficiencia</span>
-          <span className='text-custom-cyan block text-5xl xl:text-7xl'>
+          <span className='block text-5xl text-custom-cyan xl:text-7xl'>
             Tu proyecto
           </span>
           <span className='block'>nuestro impulso</span>
@@ -96,25 +89,18 @@ export default function Login() {
             'scale,opacity 0.4s cubic-bezier(0.17, 0.55, 0.55, 1) 0.2s'
         }}
       >
-        <div className='bg-white p-6 rounded-md mx-auto flex-1 max-w-md shadow-2xl'>
-          <img
-            className='mx-auto h-40 w-auto '
-            src={Logo}
-            alt='Your Company'
-          />
+        <div className='mx-auto max-w-md flex-1 rounded-md bg-white p-6 shadow-2xl'>
+          <img className='mx-auto h-40 w-auto ' src={Logo} alt='Your Company' />
 
-          <h2 className='mt-3 text-center text-2xl  leading-9 tracking-tight text-primary-blue font-black'>
+          <h2 className='mt-3 text-center text-2xl  font-black leading-9 tracking-tight text-primary-blue'>
             Iniciar sesión en su cuenta
           </h2>
 
-          <form
-            className='space-y-6 mt-5'
-            onSubmit={(e) => handleSubmit(e)}
-          >
+          <form className='mt-5 space-y-6' onSubmit={(e) => handleSubmit(e)}>
             <div>
               <label
                 htmlFor='email'
-                className='block text-sm leading-6 text-primary-blue font-bold'
+                className='block text-sm font-bold leading-6 text-primary-blue'
               >
                 Email
               </label>
@@ -136,7 +122,7 @@ export default function Login() {
               <div className='flex items-center justify-between'>
                 <label
                   htmlFor='password'
-                  className='block text-sm leading-6 text-primary-blue font-bold'
+                  className='block text-sm font-bold leading-6 text-primary-blue'
                 >
                   Password
                 </label>
@@ -158,7 +144,7 @@ export default function Login() {
                   type='password'
                   autoComplete='current-password'
                   required
-                  className='mt-2 block w-full rounded-md border-0 py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-blue sm:text-sm sm:leading-6'
+                  className='mt-2 block w-full rounded-md border-0 px-1.5 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-blue sm:text-sm sm:leading-6'
                   placeholder='Introduzca su contraseña'
                   onChange={(e) => handleChange(e)}
                   value={form.password}
@@ -167,7 +153,7 @@ export default function Login() {
                 <button
                   type='button'
                   onClick={() => togglePasswordVisibility('password')}
-                  className='absolute inset-y-0 right-0 px-3 flex items-center text-gray-500 cursor-pointer'
+                  className='absolute inset-y-0 right-0 flex cursor-pointer items-center px-3 text-gray-500'
                 >
                   {/* Icono de ojo para mostrar/ocultar la contraseña */}
                   <svg
@@ -197,7 +183,7 @@ export default function Login() {
             <div>
               <button
                 type='submit'
-                className='flex w-full justify-center rounded-md bg-primary-blue px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-custom-cyan hover:text-primary-blue focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 transition-colors duration-200'
+                className='flex w-full justify-center rounded-md bg-primary-blue px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm transition-colors duration-200 hover:bg-custom-cyan hover:text-primary-blue focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2'
               >
                 Acceder
               </button>
