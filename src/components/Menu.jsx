@@ -1,13 +1,22 @@
+import { useEffect } from 'react'
 import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom'
+import { NavLink, useParams, useLocation } from 'react-router-dom'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faFolderClosed, faFolderPlus } from '@fortawesome/free-solid-svg-icons'
 import useAuth from '../hooks/useAuth'
 import Logo from '../assets/OIG.png'
 import CloseIcon from '../assets/closeIcon.svg'
-import ProjectsIcon from '../assets/projectsIcon.svg'
 import LogOutIcon from '../assets/logOutIcon.svg'
 
 function Menu({ showMenu, setShowMenu }) {
   const { auth } = useAuth()
+  const params = useParams()
+
+  const { pathname } = useLocation()
+
+  useEffect(() => {
+    setShowMenu(false)
+  }, [params])
 
   return (
     <aside
@@ -24,20 +33,25 @@ function Menu({ showMenu, setShowMenu }) {
             Uptask
           </h3>
         </div>
-        <nav className='mt-10'>
-          <ul>
-            <li className='h-[28px]  px-1'>
-              <Link
+        <nav className='mt-12'>
+          <ul className='flex flex-col gap-4'>
+            <li className='h-[28px] px-1'>
+              <NavLink
                 to='/projects'
-                className='text-md flex h-full gap-2 font-bold leading-9 text-gray-300'
+                className={`${pathname === '/projects' ? 'bg-custom-cyan text-primary-blue' : 'text-gray-300'} flex h-full items-center gap-2 rounded-md px-2 text-sm font-bold transition-colors duration-200 hover:bg-custom-cyan hover:text-primary-blue`}
               >
-                <img
-                  src={ProjectsIcon}
-                  alt='Projects icon'
-                  className='w-[24px]'
-                />
+                <FontAwesomeIcon icon={faFolderClosed} className='w-[24px]' />
                 Proyectos
-              </Link>
+              </NavLink>
+            </li>
+            <li className='h-[28px] px-1'>
+              <NavLink
+                to='/projects/new-project'
+                className={`${pathname === '/projects/new-project' ? 'bg-custom-cyan text-primary-blue' : 'text-gray-300'} flex h-full items-center gap-2 rounded-md  px-2 text-sm font-bold duration-200 hover:bg-custom-cyan hover:text-primary-blue`}
+              >
+                <FontAwesomeIcon icon={faFolderPlus} className='w-[24px]' />
+                Añadir proyecto
+              </NavLink>
             </li>
           </ul>
         </nav>

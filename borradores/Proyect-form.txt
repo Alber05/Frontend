@@ -9,7 +9,7 @@ const initialForm = {
   customer: ''
 }
 function ProjectsForm({ projectToEdit = initialForm }) {
-  const [form, setForm] = useState(initialForm)
+  const [form, setForm] = useState(projectToEdit)
 
   const { createProject, editProject } = useProjects()
 
@@ -44,11 +44,11 @@ function ProjectsForm({ projectToEdit = initialForm }) {
 
   return (
     <form
-      className=' mx-auto flex  w-full max-w-xl flex-col justify-center space-y-5 rounded-md bg-padding-gray p-4 py-10'
+      className=' mx-auto flex  w-full max-w-xl flex-col justify-center space-y-5 rounded-md bg-white p-4 pb-10 pt-5'
       onSubmit={(e) => handleSubmit(e)}
     >
       <div>
-        <label className='block font-bold text-white' htmlFor='name'>
+        <label className='block font-bold text-primary-blue' htmlFor='name'>
           Nombre
         </label>
         <input
@@ -57,29 +57,32 @@ function ProjectsForm({ projectToEdit = initialForm }) {
           name='name'
           placeholder='Nombre del proyecto...'
           value={form.name}
-          className='block w-full rounded-md border border-gray-600 bg-transparent px-2 py-1.5 text-paragraph-color caret-paragraph-color shadow-sm outline-none placeholder:text-paragraph-color sm:text-sm sm:leading-6'
+          className='block w-full border border-l-0 border-r-0 border-t-0 border-b-primary-blue bg-white px-2 py-1.5 caret-primary-blue shadow-sm outline-none placeholder:text-primary-blue sm:text-sm sm:leading-6'
           onChange={(e) => handleChange(e)}
           autoComplete='off'
           required
         />
       </div>
       <div>
-        <label className='block font-bold text-white' htmlFor='description'>
-          Descripción
+        <label
+          className='block font-bold text-primary-blue'
+          htmlFor='description'
+        >
+          Description
         </label>
         <textarea
           id='description'
           name='description'
           placeholder='Descripción del proyecto...'
           value={form.description}
-          className='block h-[38px] w-full rounded-md border border-gray-600 bg-transparent px-2 py-1.5 text-paragraph-color caret-paragraph-color shadow-sm outline-none placeholder:text-paragraph-color sm:text-sm sm:leading-6'
+          className='block h-[37px] w-full border border-l-0 border-r-0 border-t-0 border-b-primary-blue bg-white px-2 py-1.5 caret-primary-blue shadow-sm outline-none placeholder:text-primary-blue sm:text-sm sm:leading-6'
           onChange={(e) => handleChange(e)}
           autoComplete='off'
           required
         />
       </div>
       <div>
-        <label className='block font-bold text-white' htmlFor='deadline'>
+        <label className='block font-bold text-primary-blue' htmlFor='deadline'>
           Deadline
         </label>
         <input
@@ -88,14 +91,14 @@ function ProjectsForm({ projectToEdit = initialForm }) {
           name='deadline'
           placeholder='dd/mm/yy'
           value={form.deadline}
-          className='date__input block w-full cursor-pointer appearance-none rounded-md border border-gray-600 bg-padding-gray px-2 py-1.5 text-paragraph-color caret-paragraph-color shadow-sm outline-none placeholder:text-paragraph-color sm:text-sm sm:leading-6 '
+          className='date__input block w-full cursor-pointer appearance-none border border-l-0 border-r-0 border-t-0 border-b-primary-blue bg-white px-2 py-1.5 text-primary-blue caret-primary-blue shadow-sm outline-none placeholder:text-primary-blue sm:text-sm sm:leading-6 '
           onChange={(e) => handleChange(e)}
           autoComplete='off'
           required
         />
       </div>
       <div>
-        <label className='block font-bold text-white' htmlFor='customer'>
+        <label className='block font-bold text-primary-blue' htmlFor='customer'>
           Cliente
         </label>
         <input
@@ -104,7 +107,7 @@ function ProjectsForm({ projectToEdit = initialForm }) {
           name='customer'
           placeholder='Nombre del cliente...'
           value={form.customer}
-          className='block w-full appearance-none rounded-md border border-gray-600 bg-padding-gray px-2 py-1.5 text-paragraph-color  shadow-sm outline-none placeholder:text-paragraph-color focus:bg-padding-gray active:bg-padding-gray sm:text-sm sm:leading-6'
+          className='block w-full appearance-none border border-b border-l-0 border-r-0 border-t-0 border-primary-blue bg-white px-2 py-1.5 shadow-sm outline-none placeholder:text-primary-blue focus:bg-white active:bg-white sm:text-sm sm:leading-6'
           onChange={(e) => handleChange(e)}
           autoComplete='off'
           required
@@ -114,7 +117,7 @@ function ProjectsForm({ projectToEdit = initialForm }) {
         <input
           type='submit'
           value={form._id ? 'Editar proyecto' : 'Crear proyecto'}
-          className='bg mt-[10px] block w-full cursor-pointer rounded-md bg-primary-blue px-2 py-1.5 font-bold  text-white caret-paragraph-color shadow-sm outline-none transition-colors duration-300 placeholder:text-paragraph-color hover:bg-custom-cyan hover:text-primary-blue sm:text-sm sm:leading-6'
+          className='mt-[10px] block w-full cursor-pointer rounded-lg bg-primary-blue px-2 py-1.5 font-bold text-gray-300 caret-primary-blue shadow-sm outline-none transition-colors duration-300 placeholder:text-primary-blue hover:bg-custom-cyan hover:text-primary-blue sm:text-sm sm:leading-6'
         />
       </div>
     </form>

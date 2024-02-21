@@ -10,6 +10,8 @@ import NewPassword from './pages/NewPassword'
 import ConfirmAccount from './pages/ConfirmAccount'
 import Projects from './pages/Projects'
 import NewProject from './pages/NewProject'
+import Project from './pages/Project'
+import EditProject from './pages/EditProject'
 
 const router = createBrowserRouter([
   {
@@ -59,6 +61,14 @@ const router = createBrowserRouter([
       {
         path: 'new-project',
         element: <NewProject />
+      },
+      {
+        path: ':id',
+        element: <Project />
+      },
+      {
+        path: 'edit-project/:id',
+        element: <EditProject />
       }
     ]
   }

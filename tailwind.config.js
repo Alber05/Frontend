@@ -8,8 +8,11 @@ export default {
         Russo: ['Russo One', 'serif']
       },
       colors: {
-        'primary-blue': '#0F1623',
-        'custom-cyan': '#62CFC8'
+        'primary-blue': '#111827',
+        'custom-cyan': '#62CFC8',
+        'title-colors': '#fff',
+        'paragraph-color': '#9AA0AD',
+        'padding-gray': '#1F2735'
       },
       backgroundImage: {
         'login-form':

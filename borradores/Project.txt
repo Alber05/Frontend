@@ -1,0 +1,174 @@
+import { useEffect, useState } from 'react'
+import { useParams, Link } from 'react-router-dom'
+import FormTaskModal from '../components/FormTaskModal'
+import Loader from '../components/Loader'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {
+  faPenToSquare,
+  faTrashCan,
+  faPlus
+} from '@fortawesome/free-solid-svg-icons'
+import useProjects from '../hooks/useProjects'
+import { dateFormater } from '../helpers/dateFormater'
+
+export default function Project() {
+  const [modalIsOpen, setModalIsOpen] = useState(false)
+  const [taskToEdit, setTaskToEdit] = useState(null)
+  const params = useParams()
+
+  const { getProject, project, isProjectLoading, deleteProject } = useProjects()
+
+  useEffect(() => {
+    getProject(params.id)
+  }, [params.id])
+
+  const handleDelete = (id) => {
+    if (confirm('¿Desea eliminar el proyecto?')) {
+      deleteProject(id)
+    } else {
+      return
+    }
+  }
+
+  const handleNewTask = () => {
+    setTaskToEdit(null)
+    setModalIsOpen(true)
+  }
+
+  const handleEditTask = (task) => {
+    setTaskToEdit({ ...task, deadline: task.deadline.split('T')[0] })
+    setModalIsOpen(true)
+  }
+
+  return (
+    <main
+      className={`${modalIsOpen ? 'overflow-hidden' : 'overflow-y-auto overflow-x-hidden'} relative h-full`}
+    >
+      <FormTaskModal
+        modalIsOpen={modalIsOpen}
+        setModalIsOpen={setModalIsOpen}
+        taskToEdit={taskToEdit}
+      />
+      {isProjectLoading ? (
+        <Loader />
+      ) : (
+        <>
+          <section className='flex flex-col flex-wrap items-center  gap-4 p-6'>
+            <h1 className='font-Russo text-2xl font-bold md:text-3xl'>
+              {project.name}
+            </h1>
+            <div className='flex w-full flex-col gap-4 rounded-md py-4'>
+              <div className='flex w-full flex-col gap-4 rounded-md   text-primary-blue'>
+                <p className='border-opacity-1 border border-l-0 border-r-0 border-t-0 border-b-primary-blue px-2 py-1.5 text-sm'>
+                  <span className='block text-base font-black'>
+                    Descripción:
+                  </span>{' '}
+                  {project.description}{' '}
+                </p>
+                <p className='border border-l-0 border-r-0 border-t-0 border-b-primary-blue px-2 py-1.5 text-sm'>
+                  <span className='block text-base font-black'>Cliente:</span>{' '}
+                  {project.customer}{' '}
+                </p>
+                <p className='border border-l-0 border-r-0 border-t-0 border-b-primary-blue px-2 py-1.5 text-sm'>
+                  <span className='block text-base font-black'>
+                    Fecha de entrega:
+                  </span>{' '}
+                  {dateFormater(project.deadline)}
+                </p>
+              </div>
+              <div className='flex flex-wrap justify-center gap-4'>
+                <Link
+                  to={`/projects/edit-project/${params.id}`}
+                  className='flex items-center justify-center gap-2 rounded-md bg-primary-blue px-4 text-sm font-semibold text-white transition-colors duration-300 hover:bg-custom-cyan hover:text-primary-blue'
+                  title='Editar'
+                >
+                  <FontAwesomeIcon
+                    icon={faPenToSquare}
+                    height={15}
+                    width={15}
+                  />
+                  <span className='hidden sm:block'>Editar</span>
+                </Link>
+                <button
+                  className='flex items-center  justify-center gap-2 rounded-md bg-primary-blue px-4 py-2 text-sm font-semibold text-white transition-colors duration-300 hover:bg-red-400 hover:text-primary-blue'
+                  title='Eliminar'
+                  onClick={() => handleDelete(project._id)}
+                >
+                  <FontAwesomeIcon icon={faTrashCan} height={15} width={15} />
+                  <span className='hidden sm:block'>Eliminar</span>
+                </button>
+                <button
+                  className='flex items-center justify-center gap-2 rounded-md bg-primary-blue px-4 py-2 text-sm font-semibold text-white transition-colors duration-300 hover:bg-green-400 hover:text-primary-blue'
+                  title='Añadir tarea'
+                  onClick={handleNewTask}
+                >
+                  <FontAwesomeIcon icon={faPlus} height={15} width={15} />
+                  <span className='hidden sm:block'>Añadir tarea</span>
+                </button>
+              </div>
+            </div>
+          </section>
+          <section className='w-full p-8'>
+            <h2 className='text-center font-Russo font-bold md:text-3xl'>
+              Tareas
+            </h2>
+            {project?.tasks?.map((task) => (
+              <article
+                key={task._id}
+                className='grid grid-cols-1 md:grid-cols-6'
+              >
+                <p className='border-opacity-1 px-2 py-1.5 text-sm'>
+                  <span className='block text-base font-black'>Tarea:</span>{' '}
+                  {task.name}{' '}
+                </p>
+                <p className='border-opacity-1 col-span-2 px-2 py-1.5 text-sm'>
+                  <span className='block text-base font-black'>
+                    Descripción:
+                  </span>{' '}
+                  {task.description} Lorem ipsum dolor sit amet consectetur
+                  adipisicing elit. Praesentium exercitationem odio enim
+                  consectetur corporis recusandae tenetur dignissimos fuga
+                  itaque necessitatibus debitis minima earum omnis, repellat
+                  soluta similique illum in ex?
+                </p>
+                <p className='border-opacity-1  px-2 py-1.5 text-sm'>
+                  <span className='block whitespace-nowrap text-base font-black'>
+                    Fecha de entrega:
+                  </span>{' '}
+                  {dateFormater(project.deadline)}{' '}
+                </p>
+                <p className='border-opacity-1  col-span-1 px-2 py-1.5 text-sm'>
+                  <span className='block text-base font-black'>Prioridad:</span>{' '}
+                  {task.priority}{' '}
+                </p>
+
+                <div className='flex h-full items-center justify-center gap-4'>
+                  <button
+                    className='flex max-w-[100px] items-center justify-center gap-2 rounded-md bg-primary-blue px-4 py-2 text-sm font-semibold text-white transition-colors duration-300 hover:bg-custom-cyan hover:text-primary-blue'
+                    title='Editar'
+                    onClick={() => handleEditTask(task)}
+                  >
+                    <FontAwesomeIcon
+                      icon={faPenToSquare}
+                      height={15}
+                      width={15}
+                    />
+                    <span className='block'>Editar</span>
+                  </button>
+                  <button
+                    className='flex max-w-[100px] items-center  justify-center gap-2 rounded-md bg-primary-blue px-4 py-2 text-sm font-semibold text-white transition-colors duration-300 hover:bg-red-400 hover:text-primary-blue'
+                    title='Eliminar'
+                    onClick={() => handleDelete(project._id)}
+                  >
+                    <FontAwesomeIcon icon={faTrashCan} height={15} width={15} />
+                    <span className='block'>Eliminar</span>
+                  </button>
+                </div>
+              </article>
+            ))}
+          </section>
+        </>
+      )}
+    </main>
+  )
+}
