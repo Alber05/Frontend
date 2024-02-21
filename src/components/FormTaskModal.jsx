@@ -12,14 +12,10 @@ const initialForm = {
   customer: ''
 }
 
-const FormTaskModal = ({
-  modalIsOpen,
-  setModalIsOpen,
-  taskToEdit = initialForm
-}) => {
+const FormTaskModal = ({ modalIsOpen, setModalIsOpen }) => {
   const [form, setForm] = useState({})
 
-  const { submitTask, editTask, projects, setProject } = useProjects()
+  const { submitTask, editTask, taskToEdit } = useProjects()
   const params = useParams()
 
   const variants = {
@@ -73,7 +69,7 @@ const FormTaskModal = ({
           className='absolute left-0 top-0 z-20 flex h-full w-full items-center  justify-center bg-black bg-opacity-70'
         >
           <motion.div
-            className='bg-padding-gray mx-auto max-h-[90%] w-[90%] max-w-xl overflow-y-auto rounded-2xl p-6'
+            className='mx-auto max-h-[90%] w-[90%] max-w-xl overflow-y-auto rounded-2xl bg-padding-gray p-6'
             variants={item}
             initial='hidden'
             animate='visible'
@@ -82,7 +78,7 @@ const FormTaskModal = ({
             <div className='flex w-full justify-end'>
               <button
                 type='button'
-                className='flex items-center gap-2 rounded-md  text-gray-400 hover:text-paragraph-color focus:outline-none focus:ring-2'
+                className='round-md flex items-center gap-2  text-gray-400 transition-colors duration-300 hover:text-white focus:outline-none focus:ring-2'
                 onClick={() => setModalIsOpen(false)}
               >
                 <span className=''>Cerrar</span>
@@ -101,7 +97,7 @@ const FormTaskModal = ({
               </button>
             </div>
             <form
-              className='mx-auto flex w-full max-w-xl flex-col justify-center space-y-5 rounded-md  pt-5'
+              className='round-md mx-auto flex w-full max-w-xl flex-col justify-center space-y-5  pt-5'
               onSubmit={(e) => handleSubmit(e)}
             >
               {' '}
@@ -117,7 +113,7 @@ const FormTaskModal = ({
                   id='name'
                   name='name'
                   placeholder='Nombre de la tarea...'
-                  className='caret-padding-gray block w-full rounded-md border border-gray-600 bg-transparent px-2 py-1.5 text-paragraph-color shadow-sm outline-none placeholder:text-paragraph-color sm:text-sm sm:leading-6'
+                  className='round-md block w-full border border-gray-600 bg-transparent px-2 py-1.5 text-paragraph-color caret-paragraph-color shadow-sm outline-none placeholder:text-paragraph-color sm:text-sm sm:leading-6'
                   autoComplete='off'
                   required
                   value={form.name}
@@ -135,7 +131,7 @@ const FormTaskModal = ({
                   id='description'
                   name='description'
                   placeholder='Descripción de la tarea...'
-                  className='caret-padding-gray block h-[38px] w-full rounded-md border border-gray-600 bg-transparent px-2 py-1.5 text-paragraph-color shadow-sm outline-none placeholder:text-paragraph-color sm:text-sm sm:leading-6'
+                  className='round-md block h-[38px] w-full border border-gray-600 bg-transparent px-2 py-1.5 text-paragraph-color caret-paragraph-color shadow-sm outline-none placeholder:text-paragraph-color sm:text-sm sm:leading-6'
                   autoComplete='off'
                   required
                   value={form.description}
@@ -154,7 +150,7 @@ const FormTaskModal = ({
                   name='priority'
                   value={form.priority}
                   onChange={(e) => handleChange(e)}
-                  className='caret-padding-gray bg-padding-gray block h-[38px] w-full rounded-md border border-gray-600 bg-transparent px-2 py-1.5 text-paragraph-color text-paragraph-color shadow-sm outline-none placeholder:text-paragraph-color sm:text-sm sm:leading-6'
+                  className='block h-[38px] w-full rounded-md border border-gray-600 bg-padding-gray px-2 py-1.5 text-paragraph-color caret-paragraph-color shadow-sm outline-none sm:text-sm sm:leading-6'
                 >
                   <option value='' disabled>
                     -- Seleccionar --
@@ -176,7 +172,7 @@ const FormTaskModal = ({
                   id='deadline'
                   name='deadline'
                   placeholder='dd/mm/yy'
-                  className='date__input caret-padding-gray block w-full cursor-pointer appearance-none rounded-md border border-gray-600 bg-transparent px-2 py-1.5 text-paragraph-color text-paragraph-color shadow-sm outline-none placeholder:text-paragraph-color sm:text-sm sm:leading-6 '
+                  className='date__input block w-full cursor-pointer appearance-none rounded-md border border-gray-600 bg-transparent px-2 py-1.5 text-paragraph-color caret-paragraph-color shadow-sm outline-none placeholder:text-paragraph-color sm:text-sm sm:leading-6 '
                   autoComplete='off'
                   required
                   value={form.deadline}
@@ -200,7 +196,8 @@ const FormTaskModal = ({
 
 FormTaskModal.propTypes = {
   modalIsOpen: PropTypes.bool.isRequired,
-  setModalIsOpen: PropTypes.func.isRequired
+  setModalIsOpen: PropTypes.func.isRequired,
+  taskToEdit: PropTypes.object
 }
 
 export default FormTaskModal

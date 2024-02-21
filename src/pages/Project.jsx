@@ -15,10 +15,16 @@ import NoDataImage from '../assets/no-data-image.png'
 
 export default function Project() {
   const [modalIsOpen, setModalIsOpen] = useState(false)
-  const [taskToEdit, setTaskToEdit] = useState(null)
   const params = useParams()
 
-  const { getProject, project, isProjectLoading, deleteProject } = useProjects()
+  const {
+    getProject,
+    project,
+    isProjectLoading,
+    deleteProject,
+    taskToEdit,
+    setTaskToEdit
+  } = useProjects()
 
   useEffect(() => {
     getProject(params.id)
@@ -112,7 +118,7 @@ export default function Project() {
               <img src={NoDataImage} alt='' />
             </div>
           ) : (
-            <section className='grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-4 px-6 pb-10'>
+            <section className='grid grid-cols-[repeat(auto-fit,minmax(350px,1fr))] gap-4 px-6 pb-10'>
               {project?.tasks?.map((task) => (
                 <Task
                   key={task.id}

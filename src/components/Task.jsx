@@ -9,18 +9,18 @@ import {
   faCircleCheck
 } from '@fortawesome/free-solid-svg-icons'
 
-const Task = ({ task, setModalIsOpen, setTaskToEdit }) => {
+const Task = ({ task, setModalIsOpen }) => {
+  const { deleteTask, setTaskToEdit } = useProjects()
+
   const handleEditTask = (task) => {
     setTaskToEdit({ ...task, deadline: task.deadline.split('T')[0] })
     setModalIsOpen(true)
   }
 
-  const { deleteTask } = useProjects()
-
   return (
     <article
       key={task._id}
-      className=' flex flex-col gap-2 rounded-md border border-gray-600 bg-[#1F2735] p-6'
+      className=' flex flex-col justify-between gap-2 rounded-md border border-gray-600 bg-[#1F2735] p-6'
     >
       <div className='flex items-center justify-between'>
         <p className='border-opacity-1 py-1.5 text-xl font-bold text-white'>
