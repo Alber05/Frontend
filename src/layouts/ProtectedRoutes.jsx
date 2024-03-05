@@ -1,7 +1,8 @@
-import { useState, useEffect } from 'react'
-import { Outlet, Navigate } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { Navigate, Outlet } from 'react-router-dom'
 import { Toaster } from 'sonner'
 import useAuth from '../hooks/useAuth'
+
 import Menu from '../components/Menu'
 import Header from '../components/Header'
 
@@ -26,12 +27,7 @@ const ProtectedRoutes = () => {
     }
   }, [])
 
-  if (loading)
-    return (
-      <div className='flex h-screen w-full flex-col items-center justify-center gap-3 bg-primary-blue'>
-        Cargando...
-      </div>
-    )
+  if (loading) return ''
 
   return (
     <>

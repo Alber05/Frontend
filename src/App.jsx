@@ -12,6 +12,7 @@ import Projects from './pages/Projects'
 import NewProject from './pages/NewProject'
 import Project from './pages/Project'
 import EditProject from './pages/EditProject'
+import NewCollaborator from './pages/NewCollaborator'
 
 const router = createBrowserRouter([
   {
@@ -55,7 +56,7 @@ const router = createBrowserRouter([
     ),
     children: [
       {
-        path: '/projects',
+        index: true,
         element: <Projects />
       },
       {
@@ -69,6 +70,10 @@ const router = createBrowserRouter([
       {
         path: 'edit-project/:id',
         element: <EditProject />
+      },
+      {
+        path: 'new-collaborator/:id',
+        element: <NewCollaborator />
       }
     ]
   }

@@ -1,23 +1,34 @@
-import { useState, useEffect, createContext } from 'react'
+import { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { useNavigate } from 'react-router-dom'
 import axiosClient from '../config/axiosClient'
 import { toast } from 'sonner'
+import io from 'socket.io-client'
+import { ProjectsContext } from './projectsContext'
+import useAuth from '../hooks/useAuth'
 import '../index.css'
 
-const ProjectsContext = createContext({})
+let socket
 
 function ProjectsProvider({ children }) {
   const [projects, setProjects] = useState([])
   const [project, setProject] = useState({})
   const [taskToEdit, setTaskToEdit] = useState(null)
-  const [isProjectLoading, setIsProjectLoading] = useState(true)
-  const [isProjectsLoanding, setIsProjectsLoanding] = useState(true)
+  const [taskToDelete, setTaskToDelete] = useState(null)
+  const [isLoading, setIsLoading] = useState(false)
+  const [collaboratorsLoader, setCollaboratorsLoader] = useState(false)
+  const [searchedCollaborator, setSearchedCollaborator] = useState({})
+  const [collaboratorToDelete, setCollaboratorToDelete] = useState(null)
 
   const navigate = useNavigate()
+  const { auth } = useAuth()
 
   useEffect(() => {
     getProjects()
+  }, [auth])
+
+  useEffect(() => {
+    socket = io(import.meta.env.VITE_BACKEND_URL)
   }, [])
 
   const handleToastSuccess = (successMessage) => {
@@ -31,14 +42,12 @@ function ProjectsProvider({ children }) {
     })
   }
 
-  const handleToastError = (error, errorMessage) => {
-    console.log(error)
+  const handleToastError = (errorMessage) => {
     toast.error(errorMessage, {
       unstyled: true,
       classNames: {
         toast: 'bg-[#F8D7DA] flex items-center gap-2 p-4 rounded-md right-4'
       },
-      description: error.response.data.msg,
       duration: 5000
     })
   }
@@ -57,7 +66,7 @@ function ProjectsProvider({ children }) {
   }
 
   const getProjects = async () => {
-    setIsProjectsLoanding(true)
+    setIsLoading(true)
     try {
       const config = getConfig()
 
@@ -69,12 +78,12 @@ function ProjectsProvider({ children }) {
     } catch (error) {
       handleToastError(error, 'Error al recuperar los proyectos')
     } finally {
-      setIsProjectsLoanding(false)
+      setIsLoading(false)
     }
   }
 
   const getProject = async (id) => {
-    setIsProjectLoading(true)
+    setIsLoading(true)
     try {
       const config = getConfig()
       if (!config) return
@@ -82,9 +91,10 @@ function ProjectsProvider({ children }) {
       const { data: project } = await axiosClient.get(`/projects/${id}`, config)
       setProject(project)
     } catch (error) {
-      console.log(error)
+      navigate('/projects')
+      handleToastError(error, error.response.data.msg)
     } finally {
-      setIsProjectLoading(false)
+      setIsLoading(false)
     }
   }
 
@@ -100,9 +110,8 @@ function ProjectsProvider({ children }) {
 
       setTimeout(() => {
         navigate('/projects')
-      }, 3000)
+      }, 1000)
     } catch (error) {
-      console.log(console.error())
       handleToastError(error, 'Error al crear el proyecto')
     }
   }
@@ -149,49 +158,43 @@ function ProjectsProvider({ children }) {
 
       setTimeout(() => {
         navigate('/projects')
-      }, 3000)
+      }, 1000)
     } catch (error) {
       handleToastError(error, 'Error al editar el proyecto')
     }
   }
 
-  const submitTask = async (newTask) => {
+  const createTask = async (newTask) => {
     try {
       const config = getConfig()
       if (!config) return
 
       // eslint-disable-next-line no-unused-vars
       const { data } = await axiosClient.post(`/tasks`, newTask, config)
-      setProject({
-        ...project,
-        tasks: [...project.tasks, { ...newTask, status: false }]
-      })
+
       handleToastSuccess('Tarea creada correctamente')
+
+      socket.emit('new task', data)
     } catch (error) {
       handleToastError(error, 'Error al crear la tarea')
     }
   }
 
-  const editTask = async (newTask) => {
+  const editTask = async (taskToEdit) => {
     try {
       const config = getConfig()
       if (!config) return
 
       // eslint-disable-next-line no-unused-vars
       const { data } = await axiosClient.put(
-        `/tasks/${newTask._id}`,
-        newTask,
+        `/tasks/${taskToEdit._id}`,
+        taskToEdit,
         config
       )
-      const editedTasks = project.tasks.map((task) =>
-        task._id === newTask._id ? newTask : task
-      )
-      setProject({
-        ...project,
-        tasks: editedTasks
-      })
 
       handleToastSuccess('Tarea editada correctamente')
+      setTaskToEdit(null)
+      socket.emit('edit task', taskToEdit)
     } catch (error) {
       handleToastError(error, 'Error al editar la tarea')
     }
@@ -208,36 +211,169 @@ function ProjectsProvider({ children }) {
         config
       )
 
-      const newTasks = project.tasks.filter(
-        (task) => task._id != deletedTask._id
-      )
-      setProject({
-        ...project,
-        tasks: newTasks
-      })
-
       handleToastSuccess('Tarea eliminada correctamente')
+      console.log(deletedTask)
+      socket.emit('delete task', deletedTask)
     } catch (error) {
       handleToastError(error, 'Error al eliminar la tarea')
     }
   }
 
+  const changeStatusTask = async (task) => {
+    try {
+      const config = getConfig()
+      if (!config) return
+
+      // eslint-disable-next-line no-unused-vars
+      const { data } = await axiosClient.patch(
+        `/tasks/status/${task._id}`,
+        {
+          status: task.status
+        },
+        config
+      )
+
+      handleToastSuccess('Tarea actualizada correctamente')
+
+      socket.emit('change task status', task)
+    } catch (error) {
+      handleToastError(error, 'Error al actualizar la tarea')
+    }
+  }
+
+  const searchCollaborator = async (email) => {
+    setCollaboratorsLoader(true)
+    try {
+      const config = getConfig()
+
+      const { data } = await axiosClient.post(
+        '/projects/collaborators',
+        email,
+        config
+      )
+      console.log(data)
+      setSearchedCollaborator(data)
+    } catch (error) {
+      handleToastError(error, error.response.data.msg)
+    } finally {
+      setCollaboratorsLoader(false)
+    }
+  }
+
+  const addCollaborator = async (collaborator, projectId) => {
+    try {
+      const config = getConfig()
+      // eslint-disable-next-line no-unused-vars
+      const { data } = await axiosClient.post(
+        `/projects/collaborators/${projectId}`,
+        collaborator,
+        config
+      )
+
+      handleToastSuccess('Colaborador agregado correctamente')
+
+      setTimeout(() => {
+        navigate(`/projects/${projectId}`)
+      }, 1000)
+
+      setSearchedCollaborator({})
+    } catch (error) {
+      handleToastError(error, error.response.data.msg)
+    }
+  }
+
+  const deleteCollaborator = async (collaborator, projectId) => {
+    try {
+      const config = getConfig()
+
+      // eslint-disable-next-line no-unused-vars
+      const { data: deletedCollaborator } = await axiosClient.post(
+        `/projects/delete-collaborator/${projectId}`,
+        collaborator,
+        config
+      )
+      handleToastSuccess('Colaborador eliminado correctamente')
+
+      const currentColaborators = project.collaborators.filter(
+        (collaborator) => collaborator._id !== deletedCollaborator._id
+      )
+
+      setProject({
+        ...project,
+        collaborators: currentColaborators
+      })
+    } catch (error) {
+      handleToastError(error, error.response.data.msg)
+    }
+  }
+
+  // Socket io
+
+  const submitProjectTask = (task) => {
+    const updatedProject = { ...project }
+    updatedProject.tasks = [...updatedProject.tasks, { ...task, status: false }]
+    setProject(updatedProject)
+  }
+  const deletedProjectTask = (task) => {
+    const updatedProject = { ...project }
+    updatedProject.tasks = updatedProject.tasks.filter(
+      (taskState) => taskState._id !== task._id
+    )
+    setProject(updatedProject)
+  }
+
+  const editProjectTask = (task) => {
+    const updatedProject = { ...project }
+    updatedProject.tasks = updatedProject.tasks.map((taskState) =>
+      taskState._id === task._id ? task : taskState
+    )
+    setProject(updatedProject)
+  }
+
+  const changeProjectTaskStatus = (task) => {
+    const updatedProject = { ...project }
+    updatedProject.tasks = updatedProject.tasks.map((taskState) =>
+      taskState._id === task._id ? task : taskState
+    )
+    setProject(updatedProject)
+  }
+
+  const logOut = () => {
+    setProjects([])
+    setProject({})
+  }
+
   return (
     <ProjectsContext.Provider
       value={{
-        isProjectsLoanding,
+        getProjects,
         projects,
         createProject,
         getProject,
         project,
-        isProjectLoading,
+        isLoading,
         editProject,
         deleteProject,
-        submitTask,
+        createTask,
         editTask,
         deleteTask,
         taskToEdit,
-        setTaskToEdit
+        setTaskToEdit,
+        taskToDelete,
+        setTaskToDelete,
+        searchCollaborator,
+        searchedCollaborator,
+        collaboratorsLoader,
+        addCollaborator,
+        collaboratorToDelete,
+        setCollaboratorToDelete,
+        deleteCollaborator,
+        changeStatusTask,
+        submitProjectTask,
+        deletedProjectTask,
+        editProjectTask,
+        changeProjectTaskStatus,
+        logOut
       }}
     >
       {children}

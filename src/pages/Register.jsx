@@ -1,10 +1,10 @@
 import { useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useInView } from 'framer-motion'
+import axiosClient from '../config/axiosClient'
 import Alert from '../components/Alert'
 import Logo from '../assets/OIG.png'
 import passwordValidation from '../helpers/passwordValidation'
-import axiosClient from '../config/axiosClient'
 
 const initialForm = {
   name: '',

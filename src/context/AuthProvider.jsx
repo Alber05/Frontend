@@ -1,4 +1,4 @@
-import { useState, useEffect, createContext } from 'react'
+import { createContext, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { useNavigate } from 'react-router-dom'
 import axiosClient from '../config/axiosClient'
@@ -15,6 +15,7 @@ const AuthProvider = ({ children }) => {
     const autenticateUser = async () => {
       const token = localStorage.getItem('token')
       if (!token) {
+        console.log('no hay token')
         setLoading(false)
         navigate('/')
         return
@@ -39,12 +40,17 @@ const AuthProvider = ({ children }) => {
     autenticateUser()
   }, [])
 
+  const logOutAuth = () => {
+    setAuth({})
+  }
+
   return (
     <AuthContext.Provider
       value={{
         auth,
         setAuth,
-        loading
+        loading,
+        logOutAuth
       }}
     >
       {children}

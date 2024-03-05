@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import PropTypes from 'prop-types'
+import { motion, AnimatePresence } from 'framer-motion'
 import { useParams } from 'react-router-dom'
 import useProjects from '../hooks/useProjects'
-import { motion, AnimatePresence } from 'framer-motion'
-import PropTypes from 'prop-types'
 
 const initialForm = {
   name: '',
@@ -13,9 +13,9 @@ const initialForm = {
 }
 
 const FormTaskModal = ({ modalIsOpen, setModalIsOpen }) => {
-  const [form, setForm] = useState({})
+  const [form, setForm] = useState(initialForm)
 
-  const { submitTask, editTask, taskToEdit } = useProjects()
+  const { createTask, editTask, taskToEdit } = useProjects()
   const params = useParams()
 
   const variants = {
@@ -47,15 +47,14 @@ const FormTaskModal = ({ modalIsOpen, setModalIsOpen }) => {
     e.preventDefault()
 
     if (!form._id) {
-      await submitTask({ ...form, project: params.id })
+      await createTask({ ...form, project: params.id })
     } else {
       await editTask(form)
     }
 
     setForm(initialForm)
-    setTimeout(() => {
-      setModalIsOpen(false)
-    }, 2000)
+
+    setModalIsOpen(false)
   }
 
   return (
@@ -78,7 +77,7 @@ const FormTaskModal = ({ modalIsOpen, setModalIsOpen }) => {
             <div className='flex w-full justify-end'>
               <button
                 type='button'
-                className='round-md flex items-center gap-2  text-gray-400 transition-colors duration-300 hover:text-white focus:outline-none focus:ring-2'
+                className='round-md flex items-center gap-2 text-gray-400 transition-colors duration-300 hover:text-white focus:outline-none focus:ring-2'
                 onClick={() => setModalIsOpen(false)}
               >
                 <span className=''>Cerrar</span>

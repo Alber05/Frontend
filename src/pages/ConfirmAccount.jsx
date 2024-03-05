@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
+import axiosClient from '../config/axiosClient'
 import ErrorComponent from '../components/ErrorComponent'
 import confirm from '../assets/confirm.png'
-import axiosClient from '../config/axiosClient'
 
 function ConfirmAccount() {
   const [alert, setAlert] = useState(null)

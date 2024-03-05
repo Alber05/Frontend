@@ -1,21 +1,22 @@
 import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import ProjectsForm from '../components/ProjectsForm'
-import Loader from '../components/Loader'
 import useProjects from '../hooks/useProjects'
+import ProjectsForm from '../components/NewProject-EditProyect/ProjectsForm'
+import Loader from '../components/Loader'
 import EditProjectVector from '../assets/edit.png'
 
 export default function EditProject() {
-  const { getProject, project, isProjectLoading } = useProjects()
+  const { getProject, project, isLoading } = useProjects()
   const params = useParams()
 
   useEffect(() => {
     getProject(params.id)
   }, [])
 
+  //TODO: Revisar y terminar página
   return (
     <main className='h-full'>
-      {isProjectLoading ? (
+      {isLoading ? (
         <Loader />
       ) : (
         <>

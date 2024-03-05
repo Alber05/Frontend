@@ -2,9 +2,9 @@ import { useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useInView } from 'framer-motion'
 import useAuth from '../hooks/useAuth'
-import Logo from '../assets/OIG.png'
-import Alert from '../components/Alert'
 import axiosClient from '../config/axiosClient'
+import Alert from '../components/Alert'
+import Logo from '../assets/OIG.png'
 
 const initialForm = {
   email: '',
@@ -37,6 +37,7 @@ export default function Login() {
         msg: 'Usuario logeado correctamente',
         error: false
       })
+
       localStorage.setItem('token', data.token)
       setAuth(data)
       navigate('/projects')

@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import Logo from '../assets/OIG.png'
-import passwordValidation from '../helpers/passwordValidation'
+import axiosClient from '../config/axiosClient'
 import Alert from '../components/Alert'
 import ErrorComponent from '../components/ErrorComponent'
-import axiosClient from '../config/axiosClient'
+import Logo from '../assets/OIG.png'
+import passwordValidation from '../helpers/passwordValidation'
 
 const initialForm = {
   password: '',

@@ -3,13 +3,15 @@ import PropTypes from 'prop-types'
 import { NavLink, useParams, useLocation } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFolderClosed, faFolderPlus } from '@fortawesome/free-solid-svg-icons'
+import useProjects from '../hooks/useProjects'
 import useAuth from '../hooks/useAuth'
 import Logo from '../assets/OIG.png'
 import CloseIcon from '../assets/closeIcon.svg'
 import LogOutIcon from '../assets/logOutIcon.svg'
 
 function Menu({ showMenu, setShowMenu }) {
-  const { auth } = useAuth()
+  const { auth, logOutAuth } = useAuth()
+  const { logOut } = useProjects()
   const params = useParams()
 
   const { pathname } = useLocation()
@@ -17,6 +19,12 @@ function Menu({ showMenu, setShowMenu }) {
   useEffect(() => {
     setShowMenu(false)
   }, [params])
+
+  const handleLogAuth = () => {
+    logOut()
+    logOutAuth()
+    localStorage.removeItem('token')
+  }
 
   return (
     <aside
@@ -63,10 +71,10 @@ function Menu({ showMenu, setShowMenu }) {
           </div>
           <p className='text-gray-50'>¡Hola {auth.name}!</p>
         </div>
-        <div className='flex gap-4 py-6'>
+        <button className='flex gap-4 py-6' onClick={handleLogAuth}>
           <img src={LogOutIcon} alt='Log out icon' className='w-[30px]' />
           <p className='text-gray-50'>Cerrar sesión</p>
-        </div>
+        </button>
       </div>
 
       <div className='w-full bg-primary-blue bg-opacity-50 px-6 lg:hidden'>

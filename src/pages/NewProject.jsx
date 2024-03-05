@@ -1,4 +1,4 @@
-import ProjectsForm from '../components/ProjectsForm'
+import ProjectsForm from '../components/NewProject-EditProyect/ProjectsForm'
 import NewProjectVector from '../assets/projects.png'
 
 function NewProject() {
@@ -8,7 +8,7 @@ function NewProject() {
       <h1 className='text-nowrap text-center font-Russo text-4xl font-bold text-primary-blue'>
         Crear proyecto
       </h1>
-      <ProjectsForm></ProjectsForm>
+      <ProjectsForm />
     </main>
   )
 }

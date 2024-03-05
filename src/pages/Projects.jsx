@@ -1,18 +1,16 @@
 import useProjects from '../hooks/useProjects'
-import ProjectPreview from '../components/ProjectPreview'
-import NoDataImage from '../assets/no-data-image.png'
+import ProjectPreview from '../components/Projects/ProjectPreview'
 import Loader from '../components/Loader'
+import NoDataImage from '../assets/no-data-image.png'
 
 const Projects = () => {
-  const { projects, isProjectsLoanding } = useProjects()
+  const { projects, isLoading } = useProjects()
 
-  //TODO: Añadir condición para cuando no hay proyectos
-
-  if (isProjectsLoanding) return <Loader />
+  if (isLoading) return <Loader />
 
   return (
     <main className='h-full'>
-      {projects.length == 0 ? (
+      {projects.length === 0 ? (
         <div className='flex h-full w-full flex-col items-center justify-center'>
           <h1 className=' py-8 text-center text-3xl font-bold tracking-wider text-white'>
             Todavia no hay proyectos

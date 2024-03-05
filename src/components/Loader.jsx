@@ -7,12 +7,12 @@ const Loader = () => {
         height='100'
         width='100'
         radius='9'
-        color='rgb(15 22 35)'
+        color='rgb(154 160 173)'
         ariaLabel='loading'
         wrapperStyle
         wrapperClass
       />
-      <h3 className='font-Russo text-xl font-bold tracking-wider text-primary-blue'>
+      <h3 className='font-Russo text-xl font-bold tracking-wider text-paragraph-color'>
         Cargando...
       </h3>
     </div>

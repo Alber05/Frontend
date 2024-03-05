@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import useProjects from '../hooks/useProjects'
+import useProjects from '../../hooks/useProjects'
 
 const initialForm = {
   name: '',

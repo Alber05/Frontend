@@ -1,9 +1,9 @@
 import { useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useInView } from 'framer-motion'
+import axiosClient from '../config/axiosClient'
 import Alert from '../components/Alert'
 import Logo from '../assets/OIG.png'
-import axiosClient from '../config/axiosClient'
 
 function ForgotPassword() {
   const [email, setEmail] = useState('')
