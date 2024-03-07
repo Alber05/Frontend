@@ -50,7 +50,7 @@ function ForgotPassword() {
       </div>
       <div className='flex items-center justify-center'>
         <div
-          className='max-w-md flex-1 rounded-md bg-gray-50 p-6 shadow-2xl'
+          className='mx-auto w-[90%] max-w-md rounded-md bg-gray-50 p-6 shadow-2xl'
           style={{
             translate: isInView ? '0' : '100%',
             opacity: isInView ? 1 : 0,
@@ -61,7 +61,7 @@ function ForgotPassword() {
             <img className='mx-auto h-40 w-auto' src={Logo} alt='UptaskLogo' />
           </Link>
 
-          <h2 className='mt-3 text-center text-2xl  font-black leading-9 tracking-tight text-primary-blue'>
+          <h2 className='mt-3 text-center text-lg font-black leading-9 tracking-tight text-primary-blue'>
             Recuperar contraseña
           </h2>
 
@@ -97,7 +97,7 @@ function ForgotPassword() {
             <p className='mt-5 text-center text-sm text-gray-500'>
               ¿No tienes una cuenta?{' '}
               <Link
-                to='/forgot-password/token'
+                to='/register'
                 className='font-semibold leading-6 text-custom-cyan hover:text-primary-blue'
               >
                 Crear una cuenta

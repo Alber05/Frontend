@@ -160,7 +160,6 @@ export default function Login() {
                   onClick={() => togglePasswordVisibility('password')}
                   className='absolute inset-y-0 right-0 flex cursor-pointer items-center px-3 text-gray-500'
                 >
-                  {/* Icono de ojo para mostrar/ocultar la contraseña */}
                   <svg
                     className='h-5 w-5'
                     fill='none'
