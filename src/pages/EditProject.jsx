@@ -15,20 +15,16 @@ export default function EditProject() {
 
   //TODO: Revisar y terminar página
   return (
-    <main className='h-full'>
+    <main className='p-6'>
       {isLoading ? (
         <Loader />
       ) : (
         <>
-          <h1 className='font-Russo text-4xl font-bold'>{project.name}</h1>
           <img
             src={EditProjectVector}
             alt=''
             className='mx-auto max-h-[200px]'
           />
-          <h1 className='text-nowrap text-center font-Russo text-4xl font-bold text-primary-blue'>
-            Editar proyecto
-          </h1>
           <ProjectsForm projectToEdit={project} />
         </>
       )}

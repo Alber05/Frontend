@@ -61,12 +61,12 @@ export default function Login() {
   }
   return (
     <div
-      className='grid min-h-screen w-full grid-rows-[auto]  bg-login-form bg-cover bg-fixed py-12 lg:grid-cols-2 lg:py-0'
+      className='grid min-h-screen w-full max-w-[1920px] grid-rows-[auto,1fr] py-12 lg:grid-cols-2 lg:grid-rows-[auto] lg:py-0'
       ref={pageRef}
     >
       <section className='items-center  justify-center lg:flex'>
         <h1
-          className='space-y-2 text-center text-3xl font-black uppercase text-gray-50 lg:text-4xl xl:text-5xl'
+          className='dpiScreen-title__h1 space-y-2 text-center text-3xl font-black uppercase text-gray-50 lg:text-4xl xl:text-5xl'
           style={{
             opacity: isInView ? 1 : 0,
             transition:
@@ -74,7 +74,7 @@ export default function Login() {
           }}
         >
           <span className='block'>Accede a la eficiencia</span>
-          <span className='block text-5xl text-custom-cyan xl:text-7xl'>
+          <span className=' dpiScreen-title__span block text-5xl text-custom-cyan xl:text-7xl'>
             Tu proyecto
           </span>
           <span className='block'>nuestro impulso</span>
@@ -82,7 +82,7 @@ export default function Login() {
       </section>
 
       <section
-        className='flex items-center'
+        className='flex w-full items-center pb-2'
         style={{
           transform: isInView ? 'scale-1' : 'scale-0',
           opacity: isInView ? 1 : 0,
@@ -90,10 +90,14 @@ export default function Login() {
             'scale,opacity 0.4s cubic-bezier(0.17, 0.55, 0.55, 1) 0.2s'
         }}
       >
-        <div className='mx-auto max-w-md flex-1 rounded-md bg-white p-6 shadow-2xl'>
-          <img className='mx-auto h-40 w-auto ' src={Logo} alt='Your Company' />
+        <div className='mx-auto w-[90%] max-w-md rounded-md bg-white p-6 shadow-2xl'>
+          <img
+            className='mx-auto h-[150px] w-auto sm:h-40'
+            src={Logo}
+            alt='Your Company'
+          />
 
-          <h2 className='mt-3 text-center text-2xl  font-black leading-9 tracking-tight text-primary-blue'>
+          <h2 className='mt-3 text-center text-lg font-black leading-9 tracking-tight text-primary-blue'>
             Iniciar sesión en su cuenta
           </h2>
 

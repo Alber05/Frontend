@@ -14,6 +14,7 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const autenticateUser = async () => {
       const token = localStorage.getItem('token')
+      console.log(token)
       if (!token) {
         console.log('no hay token')
         setLoading(false)

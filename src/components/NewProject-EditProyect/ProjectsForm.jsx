@@ -44,9 +44,13 @@ function ProjectsForm({ projectToEdit = initialForm }) {
 
   return (
     <form
-      className=' mx-auto flex  w-full max-w-xl flex-col justify-center space-y-5 rounded-md bg-padding-gray p-4 py-10'
+      className=' mx-auto my-6 flex w-full max-w-xl flex-col justify-center space-y-5 rounded-md bg-padding-gray p-8'
       onSubmit={(e) => handleSubmit(e)}
     >
+      <h1 className='text-nowrap text-center text-4xl font-bold text-white'>
+        {projectToEdit._id ? 'Editar proyecto' : 'Crear proyecto'}
+      </h1>
+
       <div>
         <label className='block font-bold text-white' htmlFor='name'>
           Nombre

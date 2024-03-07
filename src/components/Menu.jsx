@@ -67,6 +67,7 @@ function Menu({ showMenu, setShowMenu }) {
           <div className='h-[30px] w-[30px] overflow-hidden rounded-full bg-custom-cyan'>
             <img
               src={`https://ui-avatars.com/api/?name=${auth.name}&background=0D8ABC&color=fff&size=128`}
+              className='h-[30px] w-[30px] rounded-full'
             />
           </div>
           <p className='text-gray-50'>¡Hola {auth.name}!</p>

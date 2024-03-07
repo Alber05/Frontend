@@ -19,6 +19,9 @@ export default {
           'linear-gradient(to left, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.8)), url("/src/assets/login-bg.jpg")',
         'register-form':
           'linear-gradient(to right, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url("/src/assets/sign-up.jpg")'
+      },
+      screens: {
+        '3xl': '2560px'
       }
     }
   },
