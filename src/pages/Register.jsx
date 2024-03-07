@@ -71,11 +71,11 @@ function Register() {
 
   return (
     <div
-      className='grid w-full grid-rows-[auto,1fr] items-center lg:grid-cols-2 lg:grid-rows-[auto] '
+      className='grid w-full grid-rows-[auto,1fr] items-center py-12 lg:grid-cols-2 lg:grid-rows-[auto]'
       ref={pageRef}
     >
       <div
-        className='py-6 lg:flex lg:items-center lg:justify-center'
+        className='mb-6 lg:mb-0 lg:flex lg:items-center lg:justify-center'
         style={{
           opacity: isInView ? 1 : 0,
           transition:

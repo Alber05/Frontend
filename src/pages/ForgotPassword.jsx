@@ -39,7 +39,7 @@ function ForgotPassword() {
       className='grid min-h-screen w-full overflow-hidden bg-login-form bg-cover bg-fixed py-6 lg:grid-cols-2 lg:py-0'
       ref={pageRef}
     >
-      <div className='flex items-center justify-center'>
+      <div className='mb-6 flex items-center justify-center lg:mb-0'>
         <h1 className='space-y-2 text-center text-3xl font-black uppercase text-gray-50 lg:text-4xl xl:text-5xl '>
           <span className='block'>Recupera el acceso con facilidad</span>
           <span className='block text-5xl text-custom-cyan xl:text-7xl'>
