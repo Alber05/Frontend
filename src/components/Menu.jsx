@@ -63,16 +63,19 @@ function Menu({ showMenu, setShowMenu }) {
             </li>
           </ul>
         </nav>
-        <div className='flex items-center gap-4'>
-          <div className='h-[30px] w-[30px] overflow-hidden rounded-full bg-custom-cyan'>
+        <div className='inline-flex items-center gap-4'>
+          <div className='overflow-hidden rounded-full bg-custom-cyan'>
             <img
               src={`https://ui-avatars.com/api/?name=${auth.name}&background=0D8ABC&color=fff&size=128`}
               className='h-[30px] w-[30px] rounded-full'
             />
           </div>
-          <p className='text-gray-50'>¡Hola {auth.name}!</p>
+          <p className='text-sm text-gray-50'>¡Hola {auth.name}!</p>
         </div>
-        <button className='flex gap-4 py-6' onClick={handleLogAuth}>
+        <button
+          className='inline-flex items-center gap-4 py-6 text-sm'
+          onClick={handleLogAuth}
+        >
           <img src={LogOutIcon} alt='Log out icon' className='w-[30px]' />
           <p className='text-gray-50'>Cerrar sesión</p>
         </button>
@@ -83,7 +86,7 @@ function Menu({ showMenu, setShowMenu }) {
           <img
             src={CloseIcon}
             alt='Close Icon'
-            className='h-[40px] w-[40px] cursor-pointer'
+            className='h-[30px] w-[30px] cursor-pointer'
             onClick={() => setShowMenu(!showMenu)}
           />
         </div>
